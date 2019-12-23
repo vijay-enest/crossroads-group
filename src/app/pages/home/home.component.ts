@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Store, select } from "@ngrx/store";
+import { CommitsService } from "src/app/services/commits.service";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -7,9 +9,29 @@ import { Store, select } from "@ngrx/store";
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-  user: any;
+  dataSource: any;
+  displayedColumns: string[] = [
+    "Commiter Name",
+    "Commiter Email",
+    "Message",
+    "Commit Date"
+  ];
+  loading = true;
+  constructor(private commitService: CommitsService) {}
 
-  constructor() {}
+  ngOnInit() {
+    this.getRepoCommitHistory();
+  }
 
-  ngOnInit() {}
+  private getRepoCommitHistory() {
+    this.commitService.commitHistory$.subscribe(response => {
+      this.loading = false;
+      this.dataSource = response;
+    });
+  }
+
+  refreshCommits() {
+    this.loading = true;
+    this.commitService.refreshCommits();
+  }
 }

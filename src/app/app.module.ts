@@ -7,9 +7,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { AuthGuard } from './services';
 import { ComponentModule } from './components/components.module';
+import { CommitsService } from './services/commits.service';
+import { HttpClientModule } from '@angular/common/http'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,8 +25,9 @@ import { ComponentModule } from './components/components.module';
     ReactiveFormsModule,
     FlexLayoutModule,
     ComponentModule,
+    HttpClientModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard , CommitsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
